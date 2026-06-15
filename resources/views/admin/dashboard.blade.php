@@ -82,8 +82,8 @@
 @section('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Nhận dữ liệu mảng PHP trả về thẳng vào biến Javascript
-    const revenueData = @json($revenue_last_6_months ?? []);
+    
+    const revenueData = <?php echo json_encode($revenue_last_6_months ?? []); ?>;
     
     if(revenueData && revenueData.length > 0) {
         const ctx = document.getElementById('revenueChart');
@@ -92,8 +92,8 @@ document.addEventListener('DOMContentLoaded', function() {
             data: {
                 labels: revenueData.map(m => m.month),
                 datasets: [{
-                    label: 'Doanh Thu (triệu ₫)',
-                    data: revenueData.map(m => (m.revenue / 1000000).toFixed(1)), // Đổi ra triệu đồng cho dễ nhìn biểu đồ
+                    label: 'Doanh Thu (Tỷ ₫)',
+                    data: revenueData.map(m => (m.revenue / 1000000000).toFixed(2)), // Đổi ra Tỷ đồng và lấy 2 số thập phân
                     borderColor: '#2563eb', // blue-600
                     backgroundColor: 'rgba(37, 99, 235, 0.1)',
                     borderWidth: 3,
@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     tooltip: {
                         callbacks: {
                             label: function(context) {
-                                return context.parsed.y + ' Triệu ₫';
+                                return context.parsed.y + ' Tỷ ₫'; // Đổi chữ Triệu thành Tỷ
                             }
                         }
                     }

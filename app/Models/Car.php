@@ -49,12 +49,16 @@ class Car extends Model
     }
     
     // Tự động nhận diện đường dẫn ảnh (Từ Seeder hoặc Upload)
-    public function getImageUrlAttribute()
+   public function getImageUrlAttribute()
     {
         if ($this->featured_image) {
             return asset('storage/' . $this->featured_image);
         }
-        return asset('Image/' . $this->name . '.jpg');
+        
+        // SỬA Ở ĐÂY: Mã hóa tên xe để trình duyệt hiểu đúng dấu + và các ký tự đặc biệt
+        $safeName = rawurlencode($this->name);
+        
+        return asset('Image/' . $safeName . '.jpg');
     }
 
     // Relationships

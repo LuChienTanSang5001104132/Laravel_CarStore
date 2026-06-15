@@ -83,7 +83,18 @@
                         </td>
                         <td class="p-4 text-gray-500">{{ $review->created_at->format('d/m/Y') }}</td>
                         <td class="p-4">
-                            <div class="flex items-center justify-center">
+                            <div class="flex items-center justify-center gap-2">
+                                {{-- Nút duyệt (chỉ hiện nếu chưa duyệt) --}}
+                                @if(!$review->is_approved)
+                                    <form action="{{ route('admin.comments.approve', $review->id) }}" method="POST" class="inline">
+                                        @csrf
+                                        <button type="submit" class="text-green-600 hover:text-green-900 font-semibold bg-green-50 hover:bg-green-100 px-3 py-1.5 rounded-lg transition-colors text-xs">
+                                            <i class="fas fa-check-circle mr-1"></i> Duyệt
+                                        </button>
+                                    </form>
+                                @endif
+
+                                {{-- Nút xóa --}}
                                 <form action="{{ route('admin.comments.destroy', $review->id) }}" method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn xóa đánh giá này không?')">
                                     @csrf
                                     @method('DELETE')

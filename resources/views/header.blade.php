@@ -45,7 +45,6 @@
                 headers: { 'Authorization': 'Bearer ' + token, 'Accept': 'application/json' }
             });
             const data = await res.json();
-            // Cấu trúc API trả về: { success: true, data: [...] }
             if (data.success && Array.isArray(data.data)) {
                 const totalQty = data.data.reduce((sum, item) => sum + (item.quantity || 0), 0);
                 if (cartCountSpan) cartCountSpan.textContent = totalQty;
@@ -109,6 +108,9 @@
                     <a href="/orders" class="block px-4 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition flex items-center gap-3">
                         <i class="fa-solid fa-clock-rotate-left text-gray-400 w-4"></i> Lịch sử mua hàng
                     </a>
+                    
+                    <div id="admin-menu-container"></div>
+                    
                     <div class="border-t border-gray-100">
                         <button onclick="window.clientLogout()" class="w-full text-left block px-4 py-3 text-sm font-medium text-red-600 hover:bg-red-50 transition flex items-center gap-3">
                             <i class="fa-solid fa-right-from-bracket text-red-400 w-4"></i> Đăng xuất
@@ -127,6 +129,16 @@
                     const user = data.user || data.data;
                     document.getElementById('header-name').textContent = user.full_name || user.name;
                     document.getElementById('header-email').textContent = user.email;
+                    
+                    // KIỂM TRA QUYỀN ADMIN TẠI ĐÂY
+                    if (user.role === 'admin') {
+                        document.getElementById('admin-menu-container').innerHTML = `
+                            <a href="/admin/dashboard" class="block px-4 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition flex items-center gap-3">
+                                <i class="fa-solid fa-chart-line text-gray-400 w-4"></i> Dashboard Admin
+                            </a>
+                        `;
+                    }
+
                     const avatarImg = document.getElementById('header-avatar');
                     if (user.avatar) {
                         avatarImg.src = '/storage/' + user.avatar;

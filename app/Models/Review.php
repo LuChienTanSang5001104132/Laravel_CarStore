@@ -11,10 +11,12 @@ class Review extends Model
         'car_id',
         'rating',
         'content',
+        'is_approved',  // THÊM DÒNG NÀY
     ];
 
     protected $casts = [
         'rating' => 'integer',
+        'is_approved' => 'boolean', // tùy chọn, để chuyển đổi đúng kiểu
     ];
 
     // Relationships

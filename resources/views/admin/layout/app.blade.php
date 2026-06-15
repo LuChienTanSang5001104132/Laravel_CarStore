@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+    <script>
+        // Kiểm tra ngay lập tức xem có token hợp lệ và có phải admin không
+        if (!localStorage.getItem('token') || localStorage.getItem('user_role') !== 'admin') {
+            alert('🚨 Bạn không có quyền truy cập vào khu vực quản trị!');
+            window.location.href = '/login';
+        }
+    </script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title') - CarStore Admin</title>
@@ -22,9 +30,9 @@
 <div class="flex h-screen">
     <div class="w-64 bg-gray-900 text-white sidebar overflow-y-auto">
         <div class="p-6 border-b border-gray-800">
-            <h1 class="text-2xl font-bold flex items-center gap-2">
+            <a href="/" target="_blank" class="text-2xl font-bold flex items-center gap-2 hover:text-blue-400 transition cursor-pointer">
                 <i class="fas fa-car"></i> CARSTORE
-            </h1>
+            </a>
             <p class="text-gray-400 text-sm">Quản Trị Viên</p>
         </div>
 
@@ -33,23 +41,23 @@
                 <i class="fas fa-tachometer-alt w-5"></i>
                 <span>Dashboard</span>
             </a>
-            
-            <a href="{{ route('admin.cars.index') }}" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg mb-1">
+
+            <a href="{{ route('admin.cars.index') }}" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg mb-1 {{ request()->routeIs('admin.cars.*') ? 'bg-blue-700' : '' }}">
                 <i class="fas fa-car w-5"></i>
                 <span>Quản lý Xe</span>
             </a>
-            
-            <a href="{{ route('admin.users.index') }}" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg mb-1">
+
+            <a href="{{ route('admin.users.index') }}" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg mb-1 {{ request()->routeIs('admin.users.*') ? 'bg-blue-700' : '' }}">
                 <i class="fas fa-users w-5"></i>
                 <span>Quản lý Người dùng</span>
             </a>
-            
-            <a href="{{ route('admin.orders.index') }}" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg mb-1">
+
+            <a href="{{ route('admin.orders.index') }}" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg mb-1 {{ request()->routeIs('admin.orders.*') ? 'bg-blue-700' : '' }}">
                 <i class="fas fa-shopping-cart w-5"></i>
                 <span>Quản lý Đơn hàng</span>
             </a>
-            
-            <a href="{{ route('admin.comments.index') }}" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg mb-1">
+
+            <a href="{{ route('admin.comments.index') }}" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg mb-1 {{ request()->routeIs('admin.comments.*') ? 'bg-blue-700' : '' }}">
                 <i class="fas fa-comments w-5"></i>
                 <span>Quản lý Bình luận</span>
             </a>

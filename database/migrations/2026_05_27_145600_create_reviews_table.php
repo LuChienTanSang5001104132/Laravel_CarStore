@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('reviews', function (Blueprint $table) {
@@ -17,13 +14,11 @@ return new class extends Migration
             $table->foreignId('car_id')->constrained()->onDelete('cascade');
             $table->integer('rating'); // 1-5 sao
             $table->text('content');   // Nội dung đánh giá
+            $table->boolean('is_approved')->default(false); // THÊM DÒNG NÀY
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('reviews');
