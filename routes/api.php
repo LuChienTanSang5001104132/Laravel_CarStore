@@ -88,4 +88,7 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
     // Bình luận
     Route::get('/comments', [AdminCommentController::class, 'index']);
     Route::delete('/comments/{id}', [AdminCommentController::class, 'destroy']);
+
+    // Quản lý Test Drive (Admin)
+    Route::apiResource('test-drives', \App\Http\Controllers\Admin\AdminTestDriveController::class);
 });

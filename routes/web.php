@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\Admin\AdminCommentController;
 use App\Http\Controllers\Admin\AdminReportController;
+use App\Http\Controllers\Admin\AdminTestDriveController;
 
 // ==================== GIAO DIỆN FRONTEND ====================
 Route::get('/', function () { return view('home'); })->name('home');
@@ -31,6 +32,7 @@ Route::get('/orders', function () { return view('orders'); })->name('orders');
 Route::get('/contact', function () { return view('contact'); })->name('contact');
 Route::get('/warranty-policy', function () { return view('warranty_policy'); })->name('warranty');
 Route::get('/installment', function () { return view('installment'); })->name('installment');
+
 
 // ==================== KHU VỰC QUẢN TRỊ ADMIN ====================
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -68,6 +70,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/comments/{id}/edit', [AdminCommentController::class, 'edit'])->name('comments.edit');
     Route::put('/comments/{id}', [AdminCommentController::class, 'update'])->name('comments.update');
     Route::delete('/comments/{id}', [AdminCommentController::class, 'destroy'])->name('comments.destroy');
+
+    // Quản lý Đăng ký lái thử
+    Route::get('/test-drives', [AdminTestDriveController::class, 'index'])->name('test-drives.index');
+    Route::get('/test-drives/{id}/edit', [AdminTestDriveController::class, 'edit'])->name('test-drives.edit');
+    Route::put('/test-drives/{id}', [AdminTestDriveController::class, 'update'])->name('test-drives.update');
+    Route::delete('/test-drives/{id}', [AdminTestDriveController::class, 'destroy'])->name('test-drives.destroy');
 
     // Báo cáo & Thống kê
     Route::get('/reports', [AdminReportController::class, 'index'])->name('reports');
